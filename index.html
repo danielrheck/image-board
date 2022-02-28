@@ -2,9 +2,25 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>IMAGE BOARD</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+    <div id="main">
+        <header>
+            <img class="headerIcon" src="/picture.svg" alt="" srcset="">
+            <div class="headerText">Daniel's Image Board🐫</div></header>
+            <div class="almostHeader">Actual Images</div>
+                <div class="picturesContainer">
+                    <div v-for="pic in images" class="pictureCard">    
+                    <div  v-bind:key="pic.id" >
+                        <img class="actualImage" v-bind:key="pic.id" :src="pic.url"  :alt= "pic.description">
+                        <p class="pictureTitle">{{pic.title}}</p></div>
+           
+        </div>
+    </div>
+    <!--  the script tag is responsible to link to vue app -->
     <script src="/js/app.js" type="module" crossorigin="use-credentials"></script>
 </body>
 </html>
