@@ -12,11 +12,22 @@
             <img class="headerIcon" src="/picture.svg" alt="" srcset="">
             <div class="headerText">Daniel's Image Board🐫</div></header>
             <div class="almostHeader">Actual Images</div>
+
+            <div class="formContainer">
+<form class="uploadForm">
+    <input v-model="title" type="text" name="title" placeholder="title">
+    <input v-model="description" type="text" name="description" placeholder="description">
+    <input v-model="username" type="text" name="username" placeholder="username">
+    <input @change="selectFile"  type="file" name="file" accept="image/*">
+    <button @click.prevent.default="upload">Upload</button>
+
+</form></div>
+
                 <div class="picturesContainer">
                     <div v-for="pic in images" class="pictureCard">    
-                    <div  v-bind:key="pic.id" >
+                    <div  v-bind:key="pic.id" class="picInt">
                         <img class="actualImage" v-bind:key="pic.id" :src="pic.url"  :alt= "pic.description">
-                        <p class="pictureTitle">{{pic.title}}</p></div>
+                        <p class="pictureTitle" :key="pic.title">{{pic.title}}</p></div>
            
         </div>
     </div>

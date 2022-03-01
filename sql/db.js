@@ -10,3 +10,14 @@ module.exports.getAllData = function () {
         ORDER by created_at DESC`
     );
 };
+
+module.exports.addImage = function (url, username, title, description) {
+    return db.query(
+        `
+    INSERT INTO images (url, username, title, description) VALUES ($1,$2,$3,$4)
+    RETURNING url, username, title, description
+    
+    `,
+        [url, username, title, description]
+    );
+};

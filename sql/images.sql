@@ -34,5 +34,5 @@ INSERT INTO images (url, username, title, description) VALUES (
     'https://bbts1.azureedge.net/images/p/full/2020/12/b1e1f4b7-8b40-4fa2-bb68-6ef0422c1d3d.jpg',
     'daniel',
     'Its morphing time',
-    'That is the question.'
+    'Go Go Power Rangers'
 );
