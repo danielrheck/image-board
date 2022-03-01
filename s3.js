@@ -32,7 +32,10 @@ exports.upload = (req, res, next) => {
     })
         .promise()
         .then(() => {
-            next();
+            console.log("Trying to delete Local:  ", filename);
+            fs.unlink(__dirname + "/uploads/" + filename, () => {
+                next();
+            });
         })
         .catch((err) => {
             console.log("Error:  ", err);
