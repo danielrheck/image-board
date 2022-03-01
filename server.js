@@ -5,7 +5,6 @@ const { getAllData, addImage } = require("./sql/db");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
 const path = require("path");
-const fs = require("fs");
 const s3 = require("./s3");
 
 let secrets;
@@ -58,7 +57,6 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
         req.body.description
     )
         .then(({ rows }) => {
-            console.log(rows[0]);
             res.json(rows[0]);
         })
         .catch((e) => {

@@ -3,34 +3,57 @@
 <head>
     <meta charset="utf-8">
     <title>IMAGE BOARD</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div id="main">
-        <header>
-            <img class="headerIcon" src="/picture.svg" alt="" srcset="">
-            <div class="headerText">Daniel's Image Board🐫</div></header>
-            <div class="almostHeader">Actual Images</div>
 
-            <div class="formContainer">
-<form class="uploadForm">
-    <input v-model="title" type="text" name="title" placeholder="title">
-    <input v-model="description" type="text" name="description" placeholder="description">
-    <input v-model="username" type="text" name="username" placeholder="username">
-    <input @change="selectFile"  type="file" name="file" accept="image/*">
-    <button @click.prevent.default="upload">Upload</button>
 
-</form></div>
+    <div class="headerContainer">
+            <header class="mainHeader">
+                <img class="headerIcon" src="/picture.svg" alt="" srcset="">
+                <div class="headerText">
+                    Daniel's Image Board 
+                </div>
+            </header>
+    </div>
 
-                <div class="picturesContainer">
-                    <div v-for="pic in images" class="pictureCard">    
-                    <div  v-bind:key="pic.id" class="picInt">
-                        <img class="actualImage" v-bind:key="pic.id" :src="pic.url"  :alt= "pic.description">
-                        <p class="pictureTitle" :key="pic.title">{{pic.title}}</p></div>
-           
+    <div class="formContainer">
+        <form class="uploadForm">
+            <input v-model="title" type="text" name="title" placeholder="title">
+            <input v-model="description" type="text" name="description" placeholder="description">
+            <input v-model="username" type="text" name="username" placeholder="username">
+            <input @change="selectFile" type="file" name="file" accept="image/*">
+            <button @click.prevent.default="upload" class="btn btn-outline-secondary">Upload</button>
+        </form>
+    </div>
+
+    <div class="almostHeaderContainer">
+        <div class="almostHeader">Latest Pics Trending!</div>
+    </div>
+
+    <div class="picturesContainer">
+        <div v-for="pic in images" class="pictureCard">    
+            <div  v-bind:key="pic.id" class="picInt">
+                <img class="actualImage" v-bind:key="pic.id" :src="pic.url"  :alt= "pic.description">
+                <p class="pictureTitle" :key="pic.title">{{pic.title}}</p>
+            </div>
         </div>
     </div>
+
+    <footer>
+        <div class="footerText"> 
+           © Daniel Heck - 2022
+        </div>
+    </footer>
+
+    <!-- Bootstrap script tag -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <!--  the script tag is responsible to link to vue app -->
     <script src="/js/app.js" type="module" crossorigin="use-credentials"></script>
 </body>
