@@ -1,4 +1,5 @@
 import * as Vue from "./vue.js";
+import modal from "./modal.js";
 
 //create vue app
 const app = Vue.createApp({
@@ -9,9 +10,14 @@ const app = Vue.createApp({
             username: "",
             file: null,
             images: [],
+            imageId: 0,
+            cohort: "rue",
         };
     },
     updated() {},
+    components: {
+        modal: modal,
+    },
     mounted: function () {
         fetch("/allImages")
             .then((resp) => resp.json())
@@ -26,6 +32,12 @@ const app = Vue.createApp({
         selectFile: function (e) {
             this.file = e.target.files[0];
             console.log("User selecteed file!  ", e.target.files[0]);
+        },
+        close: function () {
+            this.imageId = 0;
+        },
+        changeId: function (e) {
+            this.imageId = e.target.id;
         },
         upload: function (e) {
             // cantjust send a json, because its a file

@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const { getAllData, addImage } = require("./sql/db");
+const { getAllData, addImage, getImageById } = require("./sql/db");
 // require those to process file data server side
 const multer = require("multer");
 const uidSafe = require("uid-safe");
@@ -49,6 +49,17 @@ app.use(express.static("./public"));
 
 app.use(express.json());
 
+app.get("/getImage", (req, res) => {
+    let id = req.query.imageid;
+    getImageById(id)
+        .then(({ rows }) => {
+            res.json(rows[0]);
+        })
+        .catch((e) => {
+            console.log("Error getting data from DB:  ", e);
+        });
+});
+
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     addImage(
         `https://${secrets.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.file.filename}`,
@@ -64,8 +75,6 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
             res.sendStatus(500);
         });
 });
-
-// this route should come below any route the server has to serve data to the client side
 app.get("*", (req, res) => {
     res.sendFile(`${__dirname}/index.html`);
 });

@@ -6,7 +6,7 @@ body {
     margin: 0;
     width: 100vw;
     font-family: "Quicksand", sans-serif;
-    background-color: rgb(236, 244, 255);
+    background-color: rgb(236, 254, 255);
 }
 
 .headerContainer {
@@ -17,21 +17,24 @@ body {
 }
 
 .mainHeader {
-    width: 90%;
-    height: 100px;
+    width: 92%;
+    height: 90px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .headerText {
-    font-size: 32px;
+    font-size: 34px;
     color: rgb(134, 134, 134);
 }
 
 .headerIcon {
+    margin-right: 28px;
     width: 60px;
-    opacity: 50%;
+    opacity: 48%;
+    -webkit-animation: breathing 5s ease-out infinite normal;
+    animation: breathing 5s ease-out infinite normal;
 }
 
 .formContainer {
@@ -40,7 +43,7 @@ body {
     align-items: center;
     justify-content: space-around;
     width: 100vw;
-    background-color: rgb(246, 245, 255);
+    background-color: rgb(245, 255, 251);
     border-top: 2px solid rgb(194, 194, 194);
     border-bottom: 2px solid rgb(214, 214, 214);
 }
@@ -58,7 +61,7 @@ body {
     height: 55px;
     border-bottom: 2px solid rgb(214, 214, 214);
     margin-bottom: 20px;
-    background-color: rgb(248, 252, 255);
+    background-color: rgba(205, 221, 255, 0.226);
 }
 
 .almostHeader {
@@ -75,7 +78,6 @@ body {
 }
 
 .picInt {
-    /* overflow: hidden; */
     height: 290px;
     width: 100%;
 }
@@ -95,12 +97,14 @@ body {
     display: inline;
     width: 480px;
     height: 340px;
-    border: 2px dotted rgba(27, 26, 34, 0.678);
+    border: 2px solid rgba(27, 26, 34, 0.383);
     border-radius: 2%;
     justify-content: center;
     padding: 6px;
     background: rgb(243, 246, 255);
     margin-bottom: 20px;
+    box-shadow: 4px 3px 2px 1px rgba(128, 128, 128, 0.144);
+    cursor: pointer;
 }
 
 .pictureTitle {
@@ -109,7 +113,7 @@ body {
     font-size: 16px;
     line-height: 100%;
     position: relative;
-    bottom: 3px;
+    top: 3px;
     font-size: 22px;
     color: rgb(28, 28, 59);
 }
@@ -126,4 +130,102 @@ footer {
 
 .footerText {
     font-size: 12px;
+}
+
+/* logo animation */
+
+@-webkit-keyframes breathing {
+    0% {
+        -webkit-transform: scale(0.9);
+        transform: scale(0.9);
+    }
+
+    25% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+
+    60% {
+        -webkit-transform: scale(0.9);
+        transform: scale(0.9);
+    }
+
+    100% {
+        -webkit-transform: scale(0.9);
+        transform: scale(0.9);
+    }
+}
+
+@keyframes breathing {
+    0% {
+        -webkit-transform: scale(0.9);
+        -ms-transform: scale(0.9);
+        transform: scale(0.9);
+    }
+
+    25% {
+        -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+    }
+
+    60% {
+        -webkit-transform: scale(0.9);
+        -ms-transform: scale(0.9);
+        transform: scale(0.9);
+    }
+
+    100% {
+        -webkit-transform: scale(0.9);
+        -ms-transform: scale(0.9);
+        transform: scale(0.9);
+    }
+}
+
+.modalContainer {
+    background-color: rgba(6, 24, 12, 0.493);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.modalImage {
+    width: 480px;
+    height: 320px;
+    border-radius: 2%;
+    padding-bottom: 5px;
+}
+
+.modalImageName,
+.modalImageDescription,
+.modalImageAuthorAndDate {
+    line-height: 22px;
+    background-color: rgba(240, 248, 255, 0.767);
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.modalImageName {
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.modalImageAuthorAndDate {
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.closeModalButton {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    color: white;
+    cursor: pointer;
 }

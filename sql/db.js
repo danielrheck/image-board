@@ -21,3 +21,14 @@ module.exports.addImage = function (url, username, title, description) {
         [url, username, title, description]
     );
 };
+
+module.exports.getImageById = function (id) {
+    return db.query(
+        `
+        
+        SELECT * FROM images WHERE id = $1
+        
+        `,
+        [id]
+    );
+};
