@@ -216,9 +216,12 @@ footer {
     font-size: 20px;
     letter-spacing: 1px;
 }
+.modalImageDescription {
+    font-size: 14px;
+}
 
 .modalImageAuthorAndDate {
-    font-size: 14px;
+    font-size: 11px;
     letter-spacing: 1px;
 }
 
@@ -228,4 +231,80 @@ footer {
     right: 30px;
     color: white;
     cursor: pointer;
+}
+
+.commentsContainer {
+    height: 235px;
+    width: 340px;
+    background-color: rgba(255, 255, 255, 0.596);
+    border-radius: 5%;
+    display: flex;
+    flex-direction: column;
+}
+
+.inputsContainer {
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    padding-left: 25px;
+    padding-top: 7px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+}
+
+.commentInput {
+    width: 200px;
+    height: 18px;
+}
+
+.inputLabel {
+    font-size: 14px;
+}
+
+.commentButton {
+    position: relative;
+    left: 235px;
+    bottom: 42px;
+}
+
+.actualComment {
+    height: 100px;
+}
+
+.commentsBox {
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+}
+
+.comment {
+    font-size: 18px;
+    text-align: center;
+}
+
+.commentAuthor {
+    position: relative;
+    bottom: 20px;
+    font-size: 15px;
+    text-align: end;
+    padding-right: 16px;
+}
+
+.commentDate {
+    position: relative;
+    bottom: 35px;
+    font-size: 12px;
+    text-align: end;
+    padding-right: 16px;
+}
+
+.morePics {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loadMorePics {
+    display: inline;
 }

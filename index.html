@@ -13,12 +13,12 @@
 <body>
 
 
-    <div id="main">
+    <div id="main" >
 
 
         <div class="headerContainer">
                 <header class="mainHeader">
-                    <img class="headerIcon" src="/picture.svg" alt="" srcset="">
+                    <img class="headerIcon" src="/picture.svg" alt="" srcset="" >
                     <div class="headerText">
                         Daniel's Image Board 
                     </div>
@@ -38,7 +38,6 @@
         <div class="almostHeaderContainer">
             <div class="almostHeader">Latest Pics Trending!</div>
         </div>
-
         <div class="picturesContainer">
             <div v-for="pic in images" :key="pic.id" class="pictureCard" :id="pic.id" @click="changeId">    
                 <div  v-bind:key="pic.id" class="picInt" >
@@ -46,6 +45,10 @@
                     <p class="pictureTitle" :key="pic.title" :id="pic.id">{{pic.title}}</p>
                 </div>
             </div>
+        </div>
+
+        <div v-if="moreResults" class="morePics" @click="getMoreImages">
+            <p class="btn btn-outline-secondary loadMorePics">Load More Pictures</p>
         </div>
 
         <footer>

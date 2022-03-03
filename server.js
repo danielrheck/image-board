@@ -1,6 +1,13 @@
 const express = require("express");
 const app = express();
-const { getAllData, addImage, getImageById } = require("./sql/db");
+const {
+    getAllData,
+    addImage,
+    getImageById,
+    getCommentsByImageID,
+    addComment,
+    getThreeMoreImages,
+} = require("./sql/db");
 // require those to process file data server side
 const multer = require("multer");
 const uidSafe = require("uid-safe");
@@ -60,6 +67,32 @@ app.get("/getImage", (req, res) => {
         });
 });
 
+app.get("/more", (req, res) => {
+    getThreeMoreImages(req.query.lowestid).then(({ rows }) => {
+        res.json(rows);
+    });
+});
+
+app.get("/comments", (req, res) => {
+    getCommentsByImageID(req.query.imageid)
+        .then(({ rows }) => {
+            res.json(rows);
+        })
+        .catch((e) => {
+            console.log("Error getting comments from DB:  ", e);
+        });
+});
+
+app.post("/comments", (req, res) => {
+    addComment(req.body.comment, req.body.username, req.body.id)
+        .then(({ rows }) => {
+            res.json(rows[0]);
+        })
+        .catch((e) => {
+            console.log("Error inserting comment in DB:  ", e);
+        });
+});
+
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     addImage(
         `https://${secrets.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.file.filename}`,
@@ -79,4 +112,4 @@ app.get("*", (req, res) => {
     res.sendFile(`${__dirname}/index.html`);
 });
 
-app.listen(8080, () => console.log(`I'm listening.`));
+app.listen(8080, () => console.log(`Running on 8080`));

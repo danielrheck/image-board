@@ -36,3 +36,13 @@ INSERT INTO images (url, username, title, description) VALUES (
     'Its morphing time',
     'Go Go Power Rangers'
 );
+
+
+CREATE TABLE comments(
+    id SERIAL PRIMARY KEY,
+    comment VARCHAR NOT NULL,
+    username VARCHAR NOT NULL,
+    image_id VARCHAR NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
