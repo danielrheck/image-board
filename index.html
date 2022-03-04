@@ -13,7 +13,7 @@
 <body>
 
 
-    <div id="main" >
+    <div id="main" class="main">
 
 
         <div class="headerContainer">
@@ -57,7 +57,7 @@
             </div>
         </footer>
 
-        <modal v-if="imageId" :imageid="imageId" @closeClicked="close"></modal>
+        <modal v-if="imageId" :imageid="imageId" @closeClicked="close" @picdeleted="getimages"></modal>
 
     </div>
 

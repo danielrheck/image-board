@@ -77,3 +77,29 @@ module.exports.getCommentsByImageID = function (image_id) {
         [image_id]
     );
 };
+
+module.exports.deletePicAndComments = function (image_id) {
+    return db
+        .query(
+            `
+    
+        DELETE FROM comments WHERE image_id = $1
+
+    `,
+            [image_id]
+        )
+        .then(() => {
+            console.log("deleted image");
+            db.query(
+                `
+        
+            DELETE FROM images WHERE id = $1
+        
+        `,
+                [image_id]
+            );
+        })
+        .catch((e) => {
+            console.log("Error deleting from DB:  ", e);
+        });
+};

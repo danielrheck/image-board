@@ -7,6 +7,7 @@ const {
     getCommentsByImageID,
     addComment,
     getThreeMoreImages,
+    deletePicAndComments,
 } = require("./sql/db");
 // require those to process file data server side
 const multer = require("multer");
@@ -60,7 +61,7 @@ app.get("/getImage", (req, res) => {
     let id = req.query.imageid;
     getImageById(id)
         .then(({ rows }) => {
-            res.json(rows[0]);
+            res.json(rows);
         })
         .catch((e) => {
             console.log("Error getting data from DB:  ", e);
@@ -70,6 +71,14 @@ app.get("/getImage", (req, res) => {
 app.get("/more", (req, res) => {
     getThreeMoreImages(req.query.lowestid).then(({ rows }) => {
         res.json(rows);
+    });
+});
+
+app.delete("/delete", s3.deleteObjFromS3, (req, res) => {
+    let image_id = req.query.imageid;
+    console.log(image_id);
+    deletePicAndComments(image_id).then(() => {
+        res.send(200);
     });
 });
 
@@ -108,6 +117,7 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
             res.sendStatus(500);
         });
 });
+
 app.get("*", (req, res) => {
     res.sendFile(`${__dirname}/index.html`);
 });

@@ -41,3 +41,20 @@ exports.upload = (req, res, next) => {
             return res.sendStatus(500);
         });
 };
+
+exports.deleteObjFromS3 = function (req, res, next) {
+    let filename = req.query.filename;
+    let params = {
+        Bucket: secrets.AWS_BUCKET_NAME,
+        Key: filename,
+    };
+    s3.deleteObject(params)
+        .promise()
+        .then(() => {
+            next();
+        })
+        .catch((e) => {
+            console.log("Error:  ", e);
+            res.sendStatus(500);
+        });
+};

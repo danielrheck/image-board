@@ -5,8 +5,16 @@
 body {
     margin: 0;
     width: 100vw;
+    min-height: 100vh;
     font-family: "Quicksand", sans-serif;
     background-color: rgb(236, 254, 255);
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: stretch;
 }
 
 .headerContainer {
@@ -83,6 +91,7 @@ body {
 }
 
 .picturesContainer {
+    flex-grow: 1;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto;
@@ -101,7 +110,7 @@ body {
     border-radius: 2%;
     justify-content: center;
     padding: 6px;
-    background: rgb(243, 246, 255);
+    background: rgb(255, 252, 247);
     margin-bottom: 20px;
     box-shadow: 4px 3px 2px 1px rgba(128, 128, 128, 0.144);
     cursor: pointer;
@@ -126,6 +135,7 @@ footer {
     height: 26px;
     width: 100vw;
     background-color: rgba(51, 0, 133, 0.301);
+    align-self: flex-end;
 }
 
 .footerText {
@@ -194,6 +204,12 @@ footer {
     align-items: center;
     flex-direction: column;
     gap: 2px;
+}
+
+.deletePic {
+    color: red;
+    cursor: pointer;
+    background-color: white;
 }
 
 .modalImage {

@@ -14,6 +14,8 @@ const comments = {
             .then((resp) => resp.json())
             .then((resp) => {
                 for (let i = 0; i < resp.length; i++) {
+                    let date = new Date(resp[i].created_at);
+                    resp[i].created_at = date.toLocaleDateString("en-GB");
                     this.comments.unshift(resp[i]);
                 }
             })

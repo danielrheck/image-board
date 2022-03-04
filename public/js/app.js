@@ -10,10 +10,10 @@ const app = Vue.createApp({
             username: "",
             file: null,
             images: [],
-            imageId: 0,
+            imageId: location.pathname.slice(1),
             lowestId: null,
             lowestIdShowing: null,
-            moreResults: true,
+            moreResults: false,
         };
     },
     updated() {},
@@ -21,19 +21,12 @@ const app = Vue.createApp({
         modal: modal,
     },
     mounted: function () {
-        fetch("/allImages")
-            .then((resp) => resp.json())
-            .then((data) => {
-                this.images = data;
-                this.lowestIdShowing = this.images[this.images.length - 1].id;
-                this.lowestId = data[0].lowestId;
-                if (this.lowestId == this.lowestIdShowing) {
-                    this.moreResults = false;
-                }
-            })
-            .catch((e) => {
-                console.log("Error fetching images:  ", e);
-            });
+        "";
+        window.addEventListener("popstate", (e) => {
+            console.log(e.state);
+            this.imageId = location.pathname.slice(1);
+        });
+        this.getimages();
     },
     methods: {
         selectFile: function (e) {
@@ -41,6 +34,27 @@ const app = Vue.createApp({
         },
         close: function () {
             this.imageId = 0;
+            history.pushState(null, null, "/");
+        },
+        getimages: function () {
+            this.imageId = 0;
+            this.images = [];
+            history.pushState(null, null, "/");
+            console.log("Getting images ");
+            fetch("/allImages")
+                .then((resp) => resp.json())
+                .then((data) => {
+                    this.images = data;
+                    this.lowestIdShowing =
+                        this.images[this.images.length - 1].id;
+                    this.lowestId = data[0].lowestId;
+                    if (!this.lowestId == this.lowestIdShowing) {
+                        this.moreResults = true;
+                    }
+                })
+                .catch((e) => {
+                    console.log("Error fetching images:  ", e);
+                });
         },
         changeId: function (e) {
             this.imageId = e.target.id;
@@ -57,8 +71,8 @@ const app = Vue.createApp({
                     }
                     this.lowestIdShowing =
                         this.images[this.images.length - 1].id;
-                    if (this.lowestId == this.lowestIdShowing) {
-                        this.moreResults = false;
+                    if (!this.lowestId == this.lowestIdShowing) {
+                        this.moreResults = true;
                     }
                 });
         },
