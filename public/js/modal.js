@@ -9,6 +9,8 @@ const modal = {
             author: "",
             created_at: "",
             pic_id: 0,
+            previous: null,
+            next: null,
         };
     },
     props: ["imageid"],
@@ -19,30 +21,42 @@ const modal = {
         let queryURL = `/getImage?imageid=${this.imageid}`;
         this.pic_id = this.imageid;
         history.pushState(null, null, `/${this.pic_id}`);
-        fetch(queryURL)
-            .then((resp) => resp.json())
-            .then((data) => {
-                if (data[0]) {
-                    console.log("DATA.URL");
-                    this.url = data[0].url;
-                    this.title = data[0].title;
-                    this.description = data[0].description;
-                    this.author = data[0].username;
-                    let date = new Date(data[0].created_at);
-                    data[0].created_at = date.toLocaleDateString("en-GB");
-                    this.created_at = data[0].created_at;
-                } else {
-                    history.replaceState(null, null, "/");
-                    this.$emit("closeclicked");
-                }
-            })
-            .catch((e) => {
-                console.log("Fetch Failed:  ", e);
-            });
+        this.fetchimage(queryURL);
     },
     methods: {
         closeModal: function () {
             this.$emit("closeclicked");
+        },
+        fetchimage: function (queryURL) {
+            fetch(queryURL)
+                .then((resp) => resp.json())
+                .then((data) => {
+                    if (data[0]) {
+                        console.log("DATA.URL");
+                        this.url = data[0].url;
+                        this.title = data[0].title;
+                        this.description = data[0].description;
+                        this.author = data[0].username;
+                        this.author = data[0].username;
+                        let date = new Date(data[0].created_at);
+                        data[0].created_at = date.toLocaleDateString("en-GB");
+                        this.created_at = data[0].created_at;
+                        this.previous = data[0].previous;
+                        this.next = data[0].next;
+                    } else {
+                        history.replaceState(null, null, "/");
+                        this.$emit("closeclicked");
+                    }
+                })
+                .catch((e) => {
+                    console.log("Fetch Failed:  ", e);
+                });
+        },
+        nextpic: function () {
+            this.$emit("updateid", this.next);
+        },
+        previouspic: function () {
+            this.$emit("updateid", this.previous);
         },
         deletepic: function () {
             let url = this.url;
@@ -54,15 +68,27 @@ const modal = {
             });
         },
     },
+    watch: {
+        imageid: function () {
+            this.pic_id = this.imageid;
+            let queryURL = `/getImage?imageid=${this.pic_id}`;
+            this.fetchimage(queryURL);
+        },
+    },
     template: `
     <div class="modalContainer" >
+            <div class="modalSemiContainer" >
         <p class="closeModalButton" @click="closeModal">X</p>
         <img class="modalImage" :src="url" alt="macaco">
-        <div class="deletePic" @click="deletepic">Delete Pic</div>
+        
+        <div class="next" v-if="next" @click="nextpic"> ◁ </div>
+        <div class="previous" v-if="previous" @click="previouspic"> ▷ </div>
         <div class="modalImageName">{{title}}</div>
         <div class="modalImageDescription">{{description}}</div>
         <div class="modalImageAuthorAndDate">{{author}} at {{created_at}}</div>
         <comments v-if="pic_id" :pic_id="pic_id"></comments>
+        <div class="deletePic" @click="deletepic">Delete Pic</div>
+        </div>
     </div>
     
     

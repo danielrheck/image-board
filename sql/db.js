@@ -32,7 +32,20 @@ module.exports.getImageById = function (id) {
     return db.query(
         `
         
-        SELECT * FROM images WHERE id = $1
+        SELECT *, (
+            SELECT id 
+            FROM images 
+            WHERE id < $1  
+            ORDER BY id DESC
+            LIMIT 1
+        ) AS "previous", (
+            SELECT id 
+            FROM images 
+            WHERE id > $1
+            ORDER BY id ASC
+            LIMIT 1
+        ) AS "next"
+        FROM images WHERE id = $1
         
         `,
         [id]
@@ -89,7 +102,6 @@ module.exports.deletePicAndComments = function (image_id) {
             [image_id]
         )
         .then(() => {
-            console.log("deleted image");
             db.query(
                 `
         

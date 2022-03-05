@@ -51,10 +51,11 @@ const comments = {
     <div class="commentsContainer">
         <div class="inputsContainer">
             <form class="commentPostForm">
-                <label for="comment" class="inputLabel">Comment: </label><input class="commentInput" type="text" name="comment" v-model="comment" id="comment">
-                <label for="username" class="inputLabel">Username: </label><input class="commentInput" type="text" name="username" v-model="username" id="username">
-                <button class="commentButton" @click.prevent.default="postcomment">Post</button>
+                <input class="commentInput" placeholder="comment" type="text" name="comment" v-model="comment" id="comment">
+                <input class="commentInput" placeholder="username" type="text" name="username" v-model="username" id="username">
+                
             </form>    
+            <button class="commentButton btn btn-outline-secondary" @click.prevent.default="postcomment" >Post</button>
         </div>
 
         <div v-if="comments"  class="commentsBox">

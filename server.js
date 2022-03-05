@@ -9,7 +9,6 @@ const {
     getThreeMoreImages,
     deletePicAndComments,
 } = require("./sql/db");
-// require those to process file data server side
 const multer = require("multer");
 const uidSafe = require("uid-safe");
 const path = require("path");
@@ -18,9 +17,9 @@ const s3 = require("./s3");
 let secrets;
 
 if (process.env.NODE_ENV == "production") {
-    secrets = process.env; // in prod the secrets are environment variables
+    secrets = process.env;
 } else {
-    secrets = require("./secrets"); // in dev they are in secrets.json which is listed in .gitignore
+    secrets = require("./secrets");
 }
 
 const diskStorage = multer.diskStorage({
@@ -76,9 +75,8 @@ app.get("/more", (req, res) => {
 
 app.delete("/delete", s3.deleteObjFromS3, (req, res) => {
     let image_id = req.query.imageid;
-    console.log(image_id);
     deletePicAndComments(image_id).then(() => {
-        res.send(200);
+        res.sendStatus(200);
     });
 });
 

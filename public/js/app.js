@@ -23,10 +23,13 @@ const app = Vue.createApp({
     mounted: function () {
         "";
         window.addEventListener("popstate", (e) => {
-            console.log(e.state);
             this.imageId = location.pathname.slice(1);
         });
-        this.getimages();
+        window.addEventListener("updateid", (e) => {
+            this.updateid(e);
+        });
+
+        this.fetchimages();
     },
     methods: {
         selectFile: function (e) {
@@ -36,11 +39,17 @@ const app = Vue.createApp({
             this.imageId = 0;
             history.pushState(null, null, "/");
         },
-        getimages: function () {
+        updateid: function (e) {
+            this.imageId = e;
+            history.pushState(null, null, `/${this.imageId}`);
+        },
+        picdeleted: function () {
             this.imageId = 0;
-            this.images = [];
             history.pushState(null, null, "/");
-            console.log("Getting images ");
+            this.images = [];
+            this.fetchimages();
+        },
+        fetchimages: function () {
             fetch("/allImages")
                 .then((resp) => resp.json())
                 .then((data) => {
@@ -48,8 +57,10 @@ const app = Vue.createApp({
                     this.lowestIdShowing =
                         this.images[this.images.length - 1].id;
                     this.lowestId = data[0].lowestId;
-                    if (!this.lowestId == this.lowestIdShowing) {
+                    if (!(this.lowestId == this.lowestIdShowing)) {
                         this.moreResults = true;
+                    } else {
+                        this.moreResults = false;
                     }
                 })
                 .catch((e) => {
@@ -71,8 +82,10 @@ const app = Vue.createApp({
                     }
                     this.lowestIdShowing =
                         this.images[this.images.length - 1].id;
-                    if (!this.lowestId == this.lowestIdShowing) {
+                    if (!(this.lowestId == this.lowestIdShowing)) {
                         this.moreResults = true;
+                    } else {
+                        this.moreResults = false;
                     }
                 });
         },
