@@ -40,6 +40,8 @@ const comments = {
                 })
                     .then((resp) => resp.json())
                     .then((resp) => {
+                        let date = new Date(resp.created_at);
+                        resp.created_at = date.toLocaleDateString("en-GB");
                         this.comments.unshift(resp);
                     });
             } else {

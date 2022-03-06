@@ -25,8 +25,20 @@
                     <div class="headerText">
                         Daniel's Image Board 
                     </div>
+
+        <div v-show="newImages" v-cloak @click="fetchimages" class="pushContainer">
+            <p class="pushText">There are 
+                        <span class="newImages">{{newImages}}</span> 
+                        new images. Click to see...
+            </p>
+        </div>
+
+                    
                 </header>
         </div>
+
+
+
 
         <div class="formContainer">
             <form class="uploadForm">
@@ -41,9 +53,9 @@
         <div class="almostHeaderContainer">
             <div class="almostHeader">Latest Pics Trending!</div>
         </div>
-        <div class="picturesContainer">
+        <div class="picturesContainer" >
             <div v-for="pic in images" :key="pic.id" class="pictureCard" :id="pic.id" @click="changeId">    
-                <div  v-bind:key="pic.id" class="picInt" >
+                <div  v-bind:key="pic.id" v-cloak class="picInt" >
                     <img class="actualImage" v-bind:key="pic.id" :src="pic.url"  :alt= "pic.description" :id="pic.id">
                     <p class="pictureTitle" :key="pic.title" :id="pic.id">{{pic.title}}</p>
                 </div>

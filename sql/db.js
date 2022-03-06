@@ -7,20 +7,39 @@ const db = spicedPg(
 module.exports.getAllData = function () {
     return db.query(
         `SELECT *, (
-        SELECT id FROM images
-        ORDER BY id ASC
-        LIMIT 1
-    )   AS "lowestId"  
+            SELECT id FROM images
+            ORDER BY id ASC
+            LIMIT 1
+        )   AS "lowestId", (
+            SELECT id FROM images 
+            ORDER BY id DESC 
+            LIMIT 1
+        ) as "highestId"
         FROM images
         ORDER by created_at DESC
         LIMIT 3`
     );
 };
 
+module.exports.getNewImages = function (highestIdShowing) {
+    return db.query(
+        `
+    
+   SELECT COUNT(*) 
+        FROM images 
+        WHERE id > $1 
+    
+    `,
+        [highestIdShowing]
+    );
+};
+
 module.exports.addImage = function (url, username, title, description) {
     return db.query(
         `
-    INSERT INTO images (url, username, title, description) VALUES ($1,$2,$3,$4)
+    INSERT INTO images 
+    (url, username, title, description) 
+    VALUES ($1,$2,$3,$4)
     RETURNING *
     
     `,
@@ -56,13 +75,14 @@ module.exports.getThreeMoreImages = function (lowest) {
     return db.query(
         `
         SELECT *, (
-    SELECT id FROM images
-    ORDER BY id ASC
-    LIMIT 1
-) AS "lowestId" FROM images
-WHERE id < $1
-ORDER BY id DESC
-LIMIT 3;
+            SELECT id FROM images
+            ORDER BY id ASC
+            LIMIT 1
+    )   AS "lowestId" 
+            FROM images
+            WHERE id < $1
+            ORDER BY id DESC
+            LIMIT 3;
         `,
         [lowest]
     );
@@ -72,7 +92,9 @@ module.exports.addComment = function (comment, username, image_id) {
     return db.query(
         `
 
-        INSERT INTO comments (comment, username, image_id) VALUES($1, $2, $3)
+        INSERT INTO comments 
+        (comment, username, image_id) 
+        VALUES($1, $2, $3)
         RETURNING *
 
         `,
@@ -84,7 +106,8 @@ module.exports.getCommentsByImageID = function (image_id) {
     return db.query(
         `
     
-    SELECT * FROM comments WHERE image_id = $1
+    SELECT * FROM comments 
+    WHERE image_id = $1
     
     `,
         [image_id]
@@ -96,7 +119,8 @@ module.exports.deletePicAndComments = function (image_id) {
         .query(
             `
     
-        DELETE FROM comments WHERE image_id = $1
+        DELETE FROM comments 
+        WHERE image_id = $1
 
     `,
             [image_id]
@@ -105,7 +129,8 @@ module.exports.deletePicAndComments = function (image_id) {
             db.query(
                 `
         
-            DELETE FROM images WHERE id = $1
+            DELETE FROM images 
+            WHERE id = $1
         
         `,
                 [image_id]

@@ -11,6 +11,7 @@ const modal = {
             pic_id: 0,
             previous: null,
             next: null,
+            deleteConfirmation: false,
         };
     },
     props: ["imageid"],
@@ -58,6 +59,12 @@ const modal = {
         previouspic: function () {
             this.$emit("updateid", this.previous);
         },
+        openConfirmation: function () {
+            this.deleteConfirmation = true;
+        },
+        closeConfirmation: function () {
+            this.deleteConfirmation = false;
+        },
         deletepic: function () {
             let url = this.url;
             let id = this.pic_id;
@@ -76,7 +83,7 @@ const modal = {
         },
     },
     template: `
-    <div class="modalContainer" >
+    <div class="modalContainer"  >
             <div class="modalSemiContainer" >
         <p class="closeModalButton" @click="closeModal">X</p>
         <img class="modalImage" :src="url" alt="macaco">
@@ -87,7 +94,14 @@ const modal = {
         <div class="modalImageDescription">{{description}}</div>
         <div class="modalImageAuthorAndDate">{{author}} at {{created_at}}</div>
         <comments v-if="pic_id" :pic_id="pic_id"></comments>
-        <div class="deletePic" @click="deletepic">Delete Pic</div>
+        <div class="deletePic" @click="openConfirmation">Delete Pic</div>
+
+        <div v-if="deleteConfirmation" class="deleteConfirmationContainer">
+            <h3 class="deleteConfirmationText">Are you sure you want to delete this pic?</h3>
+            <h4 class="deleteAnswer" @click="deletepic">Yes</h4>
+            <h4 class="deleteAnswer" @click="closeConfirmation">No</h4>
+        </div>
+
         </div>
     </div>
     

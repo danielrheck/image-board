@@ -45,6 +45,26 @@ body {
     animation: breathing 5s ease-out infinite normal;
 }
 
+.pushContainer {
+    position: absolute;
+    top: 23px;
+    right: 90px;
+}
+
+.pushText {
+    cursor: pointer;
+    font-size: 28px;
+}
+
+[v-cloak] {
+    display: none;
+}
+
+.newImages {
+    color: red;
+    font-weight: 800;
+}
+
 .formContainer {
     height: 80px;
     display: flex;
@@ -105,7 +125,7 @@ body {
 .pictureCard {
     display: inline;
     width: 480px;
-    height: 340px;
+    height: 360px;
     border: 2px solid rgba(27, 26, 34, 0.383);
     border-radius: 2%;
     justify-content: center;
@@ -117,6 +137,7 @@ body {
 }
 
 .pictureTitle {
+    height: 50px;
     font-family: "Rock Salt", cursive;
     letter-spacing: 2px;
     font-size: 20px;
@@ -125,7 +146,7 @@ body {
     font-size: 16px;
     line-height: 100%;
     position: relative;
-    top: 3px;
+    top: 10px;
     font-size: 22px;
     color: rgb(28, 28, 59);
 }
@@ -238,12 +259,6 @@ footer {
     left: 47%;
 }
 
-.deletePic {
-    color: red;
-    cursor: pointer;
-    background-color: white;
-}
-
 .modalImage {
     width: 480px;
     height: 320px;
@@ -272,6 +287,38 @@ footer {
 .modalImageAuthorAndDate {
     font-size: 11px;
     letter-spacing: 1px;
+}
+
+.deletePic {
+    color: red;
+    cursor: pointer;
+    background-color: white;
+    position: relative;
+    top: 16px;
+}
+
+.deleteConfirmationContainer {
+    border-radius: 3%;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 160px;
+    background-color: rgb(255, 196, 196);
+    position: absolute;
+    top: 52vh;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-self: center;
+    align-self: center;
+    z-index: 10;
+}
+
+.deleteAnswer {
+    cursor: pointer;
+    color: red;
+    align-self: center;
+    padding-top: 10px;
 }
 
 .closeModalButton {

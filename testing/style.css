@@ -10,6 +10,17 @@ body {
     background-color: aliceblue;
 }
 
+.pushContainer {
+}
+
+.pushText {
+    font-size: 20px;
+}
+
+.newImages {
+    color: red;
+    font-weight: 800;
+}
 .mainHeader {
     width: 90%;
     height: 100px;

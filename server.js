@@ -8,6 +8,7 @@ const {
     addComment,
     getThreeMoreImages,
     deletePicAndComments,
+    getNewImages,
 } = require("./sql/db");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
@@ -47,6 +48,19 @@ app.get("/allImages", (req, res) => {
         })
         .catch((e) => {
             console.log("Error getting images from DB:  ", e);
+            res.status(404);
+            res.send();
+        });
+});
+
+app.get("/newImages", (req, res) => {
+    let highestIdShowing = req.query.highestIdShowing;
+    getNewImages(highestIdShowing)
+        .then(({ rows }) => {
+            res.json(rows);
+        })
+        .catch((e) => {
+            console.log("Error getting new images from DB:  ", e);
             res.status(404);
             res.send();
         });

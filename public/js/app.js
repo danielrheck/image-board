@@ -13,6 +13,8 @@ const app = Vue.createApp({
             imageId: location.pathname.slice(1),
             lowestId: null,
             lowestIdShowing: null,
+            newImages: null,
+            highestIdShowing: null,
             moreResults: false,
         };
     },
@@ -21,14 +23,13 @@ const app = Vue.createApp({
         modal: modal,
     },
     mounted: function () {
-        "";
         window.addEventListener("popstate", (e) => {
             this.imageId = location.pathname.slice(1);
         });
         window.addEventListener("updateid", (e) => {
             this.updateid(e);
         });
-
+        this.checkNewImages();
         this.fetchimages();
     },
     methods: {
@@ -53,9 +54,11 @@ const app = Vue.createApp({
             fetch("/allImages")
                 .then((resp) => resp.json())
                 .then((data) => {
+                    this.newImages = null;
                     this.images = data;
                     this.lowestIdShowing =
                         this.images[this.images.length - 1].id;
+                    this.highestIdShowing = this.images[0].id;
                     this.lowestId = data[0].lowestId;
                     if (!(this.lowestId == this.lowestIdShowing)) {
                         this.moreResults = true;
@@ -80,6 +83,7 @@ const app = Vue.createApp({
                     for (let i = 0; i < data.length; i++) {
                         this.images.push(data[i]);
                     }
+                    this.highestIdShowing = this.images[0].id;
                     this.lowestIdShowing =
                         this.images[this.images.length - 1].id;
                     if (!(this.lowestId == this.lowestIdShowing)) {
@@ -90,6 +94,18 @@ const app = Vue.createApp({
                 });
         },
         infiniteScroll: function () {},
+        checkNewImages: function () {
+            setTimeout(() => {
+                fetch(`/newImages?highestIdShowing=${this.highestIdShowing}`)
+                    .then((resp) => resp.json())
+                    .then((data) => {
+                        if (data[0].count > 0) {
+                            this.newImages = data[0].count;
+                        }
+                    });
+                this.checkNewImages();
+            }, 5000);
+        },
         upload: function () {
             const fd = new FormData();
             fd.append("file", this.file);
@@ -102,6 +118,7 @@ const app = Vue.createApp({
             })
                 .then((resp) => resp.json())
                 .then((resp) => {
+                    this.highestIdShowing = resp.id;
                     this.images.unshift(resp);
                 })
                 .catch((e) => {
